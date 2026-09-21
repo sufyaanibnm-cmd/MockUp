@@ -13,10 +13,10 @@ import {
  * homepage teaser grid (`Services.tsx`), the `/services` overview page,
  * and route definitions in `App.tsx`.
  *
- * The full page content (long description, features, images) for each
- * service lives in its own dedicated page component under
- * `src/pages/services/`, not here — that keeps each page free to grow
- * independently instead of being boxed into one generic template.
+ * The full page content (long description, features, images, process,
+ * stats, etc.) for each service lives in `src/data/serviceContent.ts` —
+ * that keeps this file small and stable for the pieces of the site that
+ * only need the short summary.
  */
 export interface ServiceMeta {
   slug: string;

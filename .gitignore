@@ -31,3 +31,10 @@ bun-debug.log*
 # TypeScript
 *.tsbuildinfo
 node_modules
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
