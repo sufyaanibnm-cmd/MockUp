@@ -18,7 +18,7 @@ export function Services() {
             What We Do / 02
           </p>
           <h2 className="max-w-3xl font-display text-[clamp(2rem,5vw,4rem)] font-black leading-none tracking-tight">
-            Six disciplines.<br /> One creative <span className="italic font-light text-white/60">engine</span>.
+            Six disciplines<br /> One creative <span className="italic font-light text-white/60">engine</span>
           </h2>
         </motion.div>
 

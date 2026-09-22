@@ -87,7 +87,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(201,162,39,0.14)",
     eyebrow: "Branding & Design",
     headlinePlain: "Brands that become",
-    headlineAccent: "impossible to ignore.",
+    headlineAccent: "impossible to ignore",
     heroSupport:
       "Strategy, identity systems, and visual language built so every touchpoint — from a logo mark to a pitch deck — feels like the same brand.",
     heroCta: "Start a Brand Project",
@@ -118,7 +118,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to build your identity?",
     closingPlain: "Let's build a brand that's",
-    closingAccent: "impossible to ignore.",
+    closingAccent: "impossible to ignore",
     nextSlug: "content-creation-animation",
   },
 
@@ -129,7 +129,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(232,84,46,0.14)",
     eyebrow: "Content Creation & Animation",
     headlinePlain: "Ideas,",
-    headlineAccent: "brought to life.",
+    headlineAccent: "brought to life",
     heroSupport:
       "From kinetic typography to full campaign edits — content engineered to stop the scroll and hold attention on brand, every time.",
     heroCta: "Start a Content Project",
@@ -160,7 +160,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to create something?",
     closingPlain: "Let's bring your next idea to",
-    closingAccent: "life.",
+    closingAccent: "life",
     nextSlug: "social-media-management",
   },
 
@@ -171,7 +171,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(46,139,107,0.14)",
     eyebrow: "Social Media Management",
     headlinePlain: "Content that",
-    headlineAccent: "keeps moving.",
+    headlineAccent: "keeps moving",
     heroSupport:
       "Strategy, content, and community management run as one continuous system — not a folder of one-off posts.",
     heroCta: "Start a Social Project",
@@ -202,7 +202,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to grow your presence?",
     closingPlain: "Let's keep your brand",
-    closingAccent: "moving.",
+    closingAccent: "moving",
     nextSlug: "videography-photography",
   },
 
@@ -213,7 +213,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(61,123,201,0.14)",
     eyebrow: "Videography & Photography",
     headlinePlain: "Frames that",
-    headlineAccent: "linger.",
+    headlineAccent: "linger",
     heroSupport:
       "Cinematic capture, visual storytelling, and polished edits that bring your brand's story to life.",
     heroCta: "Book a Shoot",
@@ -244,7 +244,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to tell your story?",
     closingPlain: "Let's make something worth",
-    closingAccent: "watching.",
+    closingAccent: "watching",
     nextSlug: "meta-ads",
   },
 
@@ -255,7 +255,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(76,111,255,0.14)",
     eyebrow: "Meta Ads",
     headlinePlain: "Creative that",
-    headlineAccent: "converts.",
+    headlineAccent: "converts",
     heroSupport:
       "Audience research, creative testing, and budget management built around one goal — measurable return, not just reach.",
     heroCta: "Start a Campaign",
@@ -287,7 +287,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to grow with performance?",
     closingPlain: "Let's build a campaign that",
-    closingAccent: "converts.",
+    closingAccent: "converts",
     nextSlug: "website-design-development",
   },
 
@@ -298,7 +298,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     accentSoft: "rgba(139,92,246,0.14)",
     eyebrow: "Website Design & Development",
     headlinePlain: "Digital experiences",
-    headlineAccent: "built to perform.",
+    headlineAccent: "built to perform",
     heroSupport:
       "Websites and stores designed responsive-first, built on clean code, and handed off production-ready.",
     heroCta: "Start a Website Project",
@@ -330,7 +330,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     closingKicker: "Ready to build your website?",
     closingPlain: "Let's build something",
-    closingAccent: "extraordinary together.",
+    closingAccent: "extraordinary together",
     nextSlug: "branding-design",
   },
 };

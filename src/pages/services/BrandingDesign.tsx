@@ -44,7 +44,7 @@ export default function BrandingDesign() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             From an idea to a{" "}
-            <span className="italic font-light text-white/50">system that scales.</span>
+            <span className="italic font-light text-white/50">system that scales</span>
           </h2>
 
           <div className="grid grid-cols-1 gap-0 sm:grid-cols-4">
@@ -85,7 +85,7 @@ export default function BrandingDesign() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Identity systems, in the{" "}
-            <span className="italic font-light text-white/50">wild.</span>
+            <span className="italic font-light text-white/50">wild</span>
           </h2>
           <ServiceGalleryGrid items={work} accent={content.accent} />
         </div>

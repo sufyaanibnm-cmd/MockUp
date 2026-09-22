@@ -16,7 +16,7 @@ export function About() {
             About / 01
           </p>
           <h2 className="font-display text-[clamp(2rem,5vw,4rem)] font-black leading-none tracking-tight">
-            Creativity with purpose. <span className="italic font-light text-black/50">Strategy</span> behind every pixel.
+            Creativity with purpose <span className="italic font-light text-black/50">Strategy</span> behind every pixel
           </h2>
         </motion.div>
         <motion.div
@@ -29,7 +29,7 @@ export function About() {
           <p className="text-lg leading-relaxed text-black/75 md:text-xl">
             At Shaffedits, creativity is communication. We are a multidisciplinary
             creative agency bringing together branding, content, design, digital
-            marketing, filmmaking, and web experiences under one creative roof.
+            strategy, filmmaking, and web experiences under one creative roof.
           </p>
           <p className="mt-6 leading-relaxed text-black/60">
             Every project we do begins with understanding your business, your

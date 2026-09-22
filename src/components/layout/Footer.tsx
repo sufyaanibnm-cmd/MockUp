@@ -14,14 +14,14 @@ export function Footer() {
         <div>
           <img src={logoWhite} alt="Shaffedits" className="h-10 w-auto" loading="lazy" />
           <p className="mt-6 max-w-xs text-sm">
-            Creative marketing agency building brands people remember.
+            Creative agency building brands people remember.
           </p>
         </div>
         <div className="text-sm">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-white/40">Explore</p>
           <ul className="space-y-2">
             <li><Link to={resolveHref("#about")} className="hover:text-white">About</Link></li>
-            <li><Link to="/services" className="hover:text-white">Services</Link></li>
+            <li><Link to={resolveHref("#services")} className="hover:text-white">Services</Link></li>
             <li><Link to={resolveHref("#work")} className="hover:text-white">Work</Link></li>
             <li><Link to={resolveHref("#team")} className="hover:text-white">Team</Link></li>
             <li><Link to={resolveHref("#contact")} className="hover:text-white">Contact</Link></li>
@@ -40,7 +40,11 @@ export function Footer() {
       </div>
       <div className="mx-auto mt-12 flex max-w-6xl flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center">
         <p>© {year} Shaffedits. All rights reserved.</p>
-        <p>Creative marketing — Made with intention.</p>
+        <p>Designed and Developed by{" "} <Link to="/" className="transition-colors hover:text-white">
+          ShaffEdits
+        </Link>.
+        </p>
+        <p>Creative agency — Made with intention.</p>
       </div>
     </footer>
   );

@@ -24,7 +24,7 @@ export default function MetaAds() {
   return (
     <>
       <SEOHead
-        title="Shaffedits | Meta Ads & Performance Marketing"
+        title="Shaffedits | Meta Ads"
         description="Campaign strategy, audience research, creative testing, and optimization — Shaffedits builds Meta ad creative that converts."
         path="/services/meta-ads"
       />
@@ -39,7 +39,7 @@ export default function MetaAds() {
           </p>
           <h2 className="mb-14 text-center font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             One system, from creative to{" "}
-            <span className="italic font-light text-white/50">conversion.</span>
+            <span className="italic font-light text-white/50">conversion</span>
           </h2>
           <div className="mx-auto flex max-w-xs flex-col items-center gap-2">
             {engineStages.map((stage, i) => (
@@ -78,7 +78,7 @@ export default function MetaAds() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Creative built to be{" "}
-            <span className="italic font-light text-white/50">tested and scaled.</span>
+            <span className="italic font-light text-white/50">tested and scaled</span>
           </h2>
           <ServiceGalleryGrid items={work} accent={content.accent} />
           <p className="mt-6 max-w-lg text-sm text-white/45">

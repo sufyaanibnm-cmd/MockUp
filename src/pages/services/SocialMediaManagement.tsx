@@ -4,7 +4,6 @@ import {
   SEOHead,
   ServiceHero,
   ProcessTimeline,
-  StatStrip,
   FormulaSection,
   EcosystemGrid,
   ServiceGalleryGrid,
@@ -41,7 +40,7 @@ export default function SocialMediaManagement() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             A loop, not a{" "}
-            <span className="italic font-light text-white/50">one-off post.</span>
+            <span className="italic font-light text-white/50">one-off post</span>
           </h2>
           <div className="flex flex-wrap items-center gap-3">
             {systemStages.map((stage, i) => (
@@ -81,7 +80,7 @@ export default function SocialMediaManagement() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Feeds we've built and{" "}
-            <span className="italic font-light text-white/50">kept running.</span>
+            <span className="italic font-light text-white/50">kept running</span>
           </h2>
           <ServiceGalleryGrid items={work} accent={content.accent} />
         </div>
@@ -95,7 +94,7 @@ export default function SocialMediaManagement() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Publishing that runs on a{" "}
-            <span className="italic font-light text-white/50">rhythm.</span>
+            <span className="italic font-light text-white/50">rhythm</span>
           </h2>
           <div className="grid grid-cols-7 gap-2 sm:gap-3">
             {weekDays.map((day, i) => (
@@ -134,7 +133,7 @@ export default function SocialMediaManagement() {
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-black/40">Results</p>
           <h2 className="mb-10 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             What consistent social{" "}
-            <span className="italic font-light text-black/40">management delivers.</span>
+            <span className="italic font-light text-black/40">management delivers</span>
           </h2>
           <ul className="grid gap-6 sm:grid-cols-2">
             {[

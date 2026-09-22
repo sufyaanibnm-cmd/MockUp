@@ -22,8 +22,8 @@ export function EcosystemGrid({ currentSlug }: EcosystemGridProps) {
           The Shaffedits System
         </p>
         <h2 className="mb-14 max-w-3xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
-          Six disciplines.<br />
-          <span className="italic font-light text-white/50">One creative engine.</span>
+          Six disciplines<br />
+          <span className="italic font-light text-white/50">One creative engine</span>
         </h2>
 
         <ul className="divide-y divide-white/10 border-y border-white/10">

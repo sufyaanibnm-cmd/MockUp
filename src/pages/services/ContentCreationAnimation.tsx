@@ -39,7 +39,7 @@ export default function ContentCreationAnimation() {
           </p>
           <h2 className="mb-10 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             A reel says more than a{" "}
-            <span className="italic font-light text-white/50">page of copy.</span>
+            <span className="italic font-light text-white/50">page of copy</span>
           </h2>
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
@@ -73,7 +73,7 @@ export default function ContentCreationAnimation() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             A cinematic look at recent{" "}
-            <span className="italic font-light text-white/50">campaigns.</span>
+            <span className="italic font-light text-white/50">campaigns</span>
           </h2>
           <ServiceGalleryGrid items={work} accent={content.accent} />
         </div>
@@ -87,7 +87,7 @@ export default function ContentCreationAnimation() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             How an idea becomes{" "}
-            <span className="italic font-light text-white/50">a finished edit.</span>
+            <span className="italic font-light text-white/50">a finished edit</span>
           </h2>
           <div className="flex flex-wrap items-center gap-3">
             {motionStages.map((stage, i) => (

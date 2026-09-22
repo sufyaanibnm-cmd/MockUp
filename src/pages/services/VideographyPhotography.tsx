@@ -76,7 +76,7 @@ export default function VideographyPhotography() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Stills and film, shown{" "}
-            <span className="italic font-light text-white/50">full-bleed.</span>
+            <span className="italic font-light text-white/50">full-bleed</span>
           </h2>
           <ServiceGalleryGrid items={work} accent={content.accent} />
         </div>
@@ -90,7 +90,7 @@ export default function VideographyPhotography() {
           </p>
           <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
             Every shot starts with a{" "}
-            <span className="italic font-light text-white/50">decision, not luck.</span>
+            <span className="italic font-light text-white/50">decision, not luck</span>
           </h2>
           <div className="grid grid-cols-1 gap-0 sm:grid-cols-5">
             {frameStages.map((stage, i) => (

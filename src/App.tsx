@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Preloader } from "@/components/layout/Preloader";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -6,7 +6,6 @@ import { SpotlightProvider } from "@/components/ui/SpotlightProvider";
 import { ScrollToHash } from "@/components/routing/ScrollToHash";
 
 import Home from "@/pages/Home";
-import ServicesIndex from "@/pages/ServicesIndex";
 import NotFound from "@/pages/NotFound";
 
 import BrandingDesign from "@/pages/services/BrandingDesign";
@@ -27,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route path="/services" element={<ServicesIndex />} />
+          <Route path="/services" element={<Navigate to="/#services" replace />} />
           <Route path="/services/branding-design" element={<BrandingDesign />} />
           <Route
             path="/services/content-creation-animation"

@@ -1,6 +1,5 @@
 import {
   useState,
-  useEffect,
   useCallback,
   useRef,
   type CSSProperties,
@@ -35,7 +34,6 @@ const TILT = 28;
 const SCALE_STEP = 0.12;
 const DURATION = 0.45;
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
-const AUTOPLAY_MS = 5000;
 const DRAG_THRESHOLD = 90;
 
 // Fixed per-card styling pulled out of the render loop so we're not
@@ -64,10 +62,6 @@ const lineVariants = {
 export function Team() {
   const n = team.length;
   const [active, setActive] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const pausedRef = useRef(false);
-  const inViewRef = useRef(false);
-  const sceneRef = useRef<HTMLDivElement>(null);
   const lockRef = useRef(false);
   const lock = useCallback(() => {
     lockRef.current = true;
@@ -132,31 +126,7 @@ export function Team() {
     [step],
   );
 
-  // ---- Autoplay: paused on hover AND when the carousel is off-screen ----
-  useEffect(() => {
-    const el = sceneRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        inViewRef.current = entry.isIntersecting;
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  
-  const handleMouseEnterScene = () => {
-    pausedRef.current = true;
-    setIsPaused(true);
-  };
-  const handleMouseLeaveScene = () => {
-    pausedRef.current = false;
-    setIsPaused(false);
-  };
-
-  // Only the previous, current, and next member are rendered — not all 6 —
-  // so a state change only ever touches 3 DOM nodes.
+  // Render the active member and the two nearest members on each side.
   const visible = [-2, -1, 0, 1, 2].map((rel) => ({
   rel,
   index: ((active + rel) % n + n) % n,
@@ -183,7 +153,7 @@ export function Team() {
               Our Team / 04
             </p>
             <h2 className="max-w-3xl font-display text-[clamp(2rem,5vw,4rem)] font-black leading-none tracking-tight">
-              The people behind the <span className="italic font-light text-white/60">work</span>.
+              The people behind the <span className="italic font-light text-white/60">work</span>
             </h2>
           </div>
           <div className="hidden shrink-0 items-baseline gap-1 font-display text-white/40 sm:flex">
@@ -201,7 +171,6 @@ export function Team() {
         </motion.div>
 
         <div
-          ref={sceneRef}
           className="relative mx-auto flex items-center justify-center outline-none"
           style={{
               perspective: PERSPECTIVE,
@@ -212,13 +181,11 @@ export function Team() {
           aria-roledescription="carousel"
           aria-label="Team members"
           onKeyDown={onKeyDown}
-          onMouseEnter={handleMouseEnterScene}
-          onMouseLeave={handleMouseLeaveScene}
         >
           {/* Ambient glow — Tailwind's blur-3xl (64px) instead of a 140px blur */}
           <div
             aria-hidden
-            className="pointer-events-none absolute w-[700px] h-[500px] rounded-full bg-white/8 blur-[120px]"
+            className="pointer-events-none absolute w-700px h-500px rounded-full bg-white/8 blur-[120px]"
           />
 
           <motion.div

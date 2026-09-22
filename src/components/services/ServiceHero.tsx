@@ -32,7 +32,7 @@ export function ServiceHero({ content, visual }: ServiceHeroProps) {
           className="mb-8 flex items-center justify-between"
         >
           <Link
-            to="/services"
+            to="/#services"
             className="inline-block text-xs font-medium uppercase tracking-[0.3em] text-white/40 transition-colors hover:text-white"
           >
             ← All Services

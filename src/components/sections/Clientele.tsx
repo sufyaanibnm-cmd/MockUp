@@ -41,7 +41,6 @@ export function Clientele() {
           <span className="italic font-light text-black/50">
             Shaffedits
           </span>
-          .
         </h2>
       </div>
 

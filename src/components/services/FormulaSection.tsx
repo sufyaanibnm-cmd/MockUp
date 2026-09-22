@@ -20,7 +20,7 @@ export function FormulaSection({ content }: FormulaSectionProps) {
         </p>
         <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4vw,3rem)] font-black leading-tight tracking-tight">
           This discipline rarely works{" "}
-          <span className="italic font-light text-black/40">alone.</span>
+          <span className="italic font-light text-black/40">alone</span>
         </h2>
 
         <motion.div

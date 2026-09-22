@@ -14,7 +14,7 @@ const items = [
     quote:
       "From the first call, they felt like an extension of our team. Every deliverable was on brand and on business.",
     name: "Rahul M.",
-    role: "Marketing Lead, Lspace",
+    role: "Lead, Lspace",
   },
   {
     quote:
@@ -24,7 +24,7 @@ const items = [
   },
   {
     quote:
-      "Editorial quality creative with performance marketing rigor — rare combo. Our CAC dropped and our brand equity grew.",
+      "Editorial quality creative with a focus on performance — rare combo. Our CAC dropped and our brand equity grew.",
     name: "Daniel T.",
     role: "Growth Director, Untangle",
   },

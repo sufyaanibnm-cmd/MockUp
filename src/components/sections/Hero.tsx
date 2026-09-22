@@ -37,7 +37,7 @@ export function Hero() {
           className="mx-auto max-w-5xl font-display text-[clamp(2.75rem,8vw,7.5rem)] font-black leading-[0.95] tracking-tight"
         >
           We build brands<br />
-          <span className="italic font-light text-white/70">people</span> remember.
+          <span className="italic font-light text-white/70">people</span> remember
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}

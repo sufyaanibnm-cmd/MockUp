@@ -10,8 +10,7 @@ import {
 
 /**
  * Lightweight, shared metadata for each service — used to drive the
- * homepage teaser grid (`Services.tsx`), the `/services` overview page,
- * and route definitions in `App.tsx`.
+ * homepage teaser grid (`Services.tsx`) and related-service navigation.
  *
  * The full page content (long description, features, images, process,
  * stats, etc.) for each service lives in `src/data/serviceContent.ts` —
@@ -80,7 +79,3 @@ export const services: ServiceMeta[] = [
     cta: "View Websites",
   },
 ];
-
-export function getServiceBySlug(slug: string | undefined): ServiceMeta | undefined {
-  return services.find((s) => s.slug === slug);
-}

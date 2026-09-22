@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import emailjs from "@emailjs/browser";
 import { Instagram, Linkedin, Youtube, CheckCircle2, AlertCircle } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { GlowButton } from "../ui/GlowButton";
 import "react-phone-input-2/lib/style.css";
 
@@ -89,6 +90,7 @@ const phone = watch("phone");
           </p>
           <div className="mt-6 flex gap-3">
             {[
+              { href: "https://wa.me/918807705502", Icon: FaWhatsapp, label: "WhatsApp"}, 
               { href: "https://www.instagram.com/shaffedits/", Icon: Instagram, label: "Instagram" },
               { href: "https://www.linkedin.com/company/shaffedits/", Icon: Linkedin, label: "LinkedIn" },
               { href: "https://www.youtube.com/@ShaffEdits.", Icon: Youtube, label: "YouTube" },
