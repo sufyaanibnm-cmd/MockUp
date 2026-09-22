@@ -6,12 +6,12 @@ import { NavLink } from "../ui/NavLink";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo-white.png";
 
-// "/services" is a real route; the rest are sections that only live on
-// the homepage, so from any other page they need the "/#section" form
+// Navigation links point to sections on the homepage, so from any
+// other page they need the "/#section" form
 // to first navigate home and then scroll (see ScrollToHash).
 const links = [
   { href: "#about", label: "About" },
-  { href: "/services", label: "Services" },
+  { href: "#services", label: "Services" },
   { href: "#work", label: "Work" },
   { href: "#team", label: "Team" },
   { href: "#contact", label: "Contact" },

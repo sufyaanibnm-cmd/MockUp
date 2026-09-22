@@ -20,11 +20,9 @@ export function NavLink({ href, label, onClick, className }: Props) {
     </span>
   );
 
-  // Internal routes (e.g. "/services") navigate client-side via
-  // react-router; hash anchors to homepage sections (e.g. "#about",
-  // "/#about") stay plain <a> tags so in-page scrolling keeps working
-  // exactly as before. Visual markup is identical either way.
-  if (href.startsWith("/") && !href.includes("#")) {
+  // Cross-page links use the router to preserve the site's base path.
+  // Same-page hash anchors stay native links for in-page scrolling.
+  if (href.startsWith("/")) {
     return (
       <Link to={href} onClick={onClick} className={cls}>
         {content}

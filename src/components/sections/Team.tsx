@@ -166,6 +166,7 @@ export function Team() {
 
   return (
     <section
+       id="team"
       className="relative overflow-hidden px-6 pt-44 pb-28 text-white md:pt-56 md:pb-40"
       style={{ background: "radial-gradient(circle at top, #232323 0%, #050505 62%)" }}
     >

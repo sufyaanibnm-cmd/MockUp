@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
  * No visual change — this only restores/extends existing scroll behaviour.
  */
 export function ScrollToHash() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
 
   useEffect(() => {
     if (!hash) {
@@ -27,7 +27,7 @@ export function ScrollToHash() {
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     return () => cancelAnimationFrame(raf);
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
 
   return null;
 }
