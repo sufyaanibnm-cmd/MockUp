@@ -87,7 +87,7 @@ export default function BrandingDesign() {
             Identity systems, in the{" "}
             <span className="italic font-light text-white/50">wild</span>
           </h2>
-          <ServiceGalleryGrid items={work} accent={content.accent} autoRotate />
+          <ServiceGalleryGrid items={work} accent={content.accent} carousel />
         </div>
       </section>
 
