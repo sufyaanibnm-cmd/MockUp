@@ -251,8 +251,8 @@ export const serviceContent: Record<string, ServiceContent> = {
   "meta-ads": {
     slug: "meta-ads",
     order: 5,
-    accent: "#4C6FFF",
-    accentSoft: "rgba(76,111,255,0.14)",
+    accent: "#D94B76",
+    accentSoft: "rgba(217, 75, 118, 0.14)",
     eyebrow: "Meta Ads",
     headlinePlain: "Creative that",
     headlineAccent: "converts",

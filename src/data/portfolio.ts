@@ -1,15 +1,4 @@
-/**
- * Central, presentation-agnostic project/case-study data used across the
- * service pages' gallery + case-study sections.
- *
- * Image paths point at the same `public/portfolio/<folder>/...` assets
- * already used by the homepage `Portfolio.tsx` gallery — nothing here is
- * fabricated: client names match the real clients already referenced
- * elsewhere in the project (see `Testimonials.tsx`), and no performance
- * numbers, dates, or results are invented. Where a project has no
- * quantifiable public result yet, `resultNote` is left undefined and the
- * UI falls back to a qualitative description instead of a stat.
- */
+import { brandingImageFiles } from "./portfolioImages";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (folder: string, file: string): string => `${BASE}portfolio/${folder}/${file}`;
@@ -36,7 +25,7 @@ export const portfolio: PortfolioItem[] = [
     category: "Branding + Social Campaign",
     description:
       "A full identity refresh paired with an ongoing content and paid-social engine, built to keep the brand consistent across every touchpoint.",
-    services: ["branding-design", "content-creation-animation", "social-media-management", "meta-ads"],
+    services: ["content-creation-animation", "social-media-management", "meta-ads"],
     images: [
       asset("Creative Campaign + Social Media", "Copy of Cloudapparels_Carousel01_042026_slide01.png"),
       asset("Creative Campaign + Social Media", "Copy of Cloudapparels_Static01_012026.png"),
@@ -78,14 +67,22 @@ export const portfolio: PortfolioItem[] = [
     slug: "brand-identity-presentations",
     title: "Identity & Presentation Systems",
     category: "Branding & Design",
-    description:
-      "Logo systems, packaging mockups, and presentation decks built as reusable brand systems rather than single-use deliverables.",
+    description: "A selection of logo identities and brand presentation artwork.",
     services: ["branding-design"],
-    images: [
-      asset("Branding + Presentation", "b1.png"),
-      asset("Branding + Presentation", "b4.png"),
-      asset("Branding + Presentation", "Copy of mockup 3.png"),
-    ],
+    images: brandingImageFiles
+      .filter((file) => /^b\d+ copy\.webp$/.test(file))
+      .map((file) => asset("Branding + Presentation", file)),
+    featured: true,
+  },
+  {
+    slug: "packaging-brand-applications",
+    title: "Packaging & Brand Applications",
+    category: "Branding & Design",
+    description: "Packaging and mockups showing brand identities in use.",
+    services: ["branding-design"],
+    images: brandingImageFiles
+      .filter((file) => !/^b\d+ copy\.webp$/.test(file))
+      .map((file) => asset("Branding + Presentation", file)),
   },
   {
     slug: "cloud-cricketeria-storefronts",
