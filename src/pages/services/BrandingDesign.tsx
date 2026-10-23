@@ -78,17 +78,19 @@ export default function BrandingDesign() {
       </section>
 
       {/* SELECTED BRANDING WORK */}
-      <section id="work" className="border-t border-white/10 bg-black px-6 py-24 text-white md:py-32">
-        <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em]" style={{ color: content.accent }}>
-            Selected Work
-          </p>
-          <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
-            Identity systems, in the{" "}
-            <span className="italic font-light text-white/50">wild</span>
-          </h2>
-          <ServiceGalleryGrid items={work} accent={content.accent} carousel />
+      <section id="work" className="border-t border-white/10 bg-black py-24 text-white md:py-32">
+        <div className="px-6">
+          <div className="mx-auto max-w-6xl">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em]" style={{ color: content.accent }}>
+              Selected Work
+            </p>
+            <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
+              Identity systems, in the{" "}
+              <span className="italic font-light text-white/50">wild</span>
+            </h2>
+          </div>
         </div>
+        <ServiceGalleryGrid items={work} accent={content.accent} carousel />
       </section>
 
       <StatStrip stats={content.stats} accent={content.accent} />
