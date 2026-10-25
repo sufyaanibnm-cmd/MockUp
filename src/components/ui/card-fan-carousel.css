@@ -1,0 +1,114 @@
+.card-fan {
+  --fan-height: clamp(160px, calc(100svh - 24rem), 330px);
+  width: 100%;
+  color: #f7f6f2;
+  outline-offset: -4px;
+}
+
+.card-fan:focus-visible {
+  outline: 1px solid var(--fan-accent);
+}
+
+.card-fan-stage {
+  position: relative;
+  isolation: isolate;
+  height: calc(var(--fan-height) + 70px);
+  width: 100%;
+  max-width: 1440px;
+  margin: 8px auto 0;
+  touch-action: pan-y pinch-zoom;
+}
+
+.card-fan-artwork {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  margin-top: 0;
+  transform-origin: 50% 72%;
+}
+
+.card-fan-frame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #161616;
+  box-shadow: 0 16px 45px #0008;
+}
+
+.card-fan-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.card-fan-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.card-fan-controls button {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: color 150ms;
+}
+
+.card-fan-controls button:hover {
+  color: var(--fan-accent);
+}
+
+.card-fan-controls button:focus-visible {
+  outline: 1px solid var(--fan-accent);
+  outline-offset: 2px;
+}
+
+.card-fan-controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.card-fan-count {
+  min-width: 67px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-fan-total {
+  color: #8d8b85;
+}
+
+.card-fan-caption {
+  min-height: 17px;
+  margin: 4px 24px 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 17px;
+  letter-spacing: 0.7px;
+  color: #adaba4;
+}
+
+@media (max-width: 759px) {
+  .card-fan { --fan-height: clamp(160px, calc(100svh - 24rem), 276px); }
+}
+
+@media (max-width: 479px) {
+  .card-fan { --fan-height: clamp(160px, calc(100svh - 24rem), 238px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-fan-controls button { transition: none; }
+}

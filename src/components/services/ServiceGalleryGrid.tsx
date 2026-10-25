@@ -8,9 +8,10 @@ interface ServiceGalleryGridProps {
   items: PortfolioItem[];
   accent: string;
   carousel?: boolean;
+  carouselAspectRatio?: number;
 }
 
-export function ServiceGalleryGrid({ items, accent, carousel = false }: ServiceGalleryGridProps) {
+export function ServiceGalleryGrid({ items, accent, carousel = false, carouselAspectRatio }: ServiceGalleryGridProps) {
   if (items.length === 0) {
     return (
       <div className="flex aspect-21/9 w-full items-center justify-center rounded-xl bg-white/[0.03] ring-1 ring-white/10">
@@ -26,7 +27,7 @@ export function ServiceGalleryGrid({ items, accent, carousel = false }: ServiceG
     return (
       // Equal space at both page edges and between cards; each card retains its height-based sizing.
       <div className="grid grid-cols-1 gap-8 overflow-x-clip px-6 sm:flex sm:items-start sm:justify-evenly sm:gap-0 sm:px-0">
-        {items.map((item) => <ServiceImageDeck key={item.slug} item={item} accent={accent} />)}
+        {items.map((item) => <ServiceImageDeck key={item.slug} item={item} accent={accent} aspectRatio={carouselAspectRatio} />)}
       </div>
     );
   }

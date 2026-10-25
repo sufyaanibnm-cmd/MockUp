@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import {
   AnimatePresence,
   animate,
@@ -148,7 +148,7 @@ function DeckPhoto({ src, alt, depth, reducedMotion, canNavigate, isBusy, onNavi
   );
 }
 
-export function ServiceImageDeck({ item, accent }: { item: PortfolioItem; accent: string }) {
+export function ServiceImageDeck({ item, accent, aspectRatio = 2 / 3 }: { item: PortfolioItem; accent: string; aspectRatio?: number }) {
   const [[imageIndex, direction], setImage] = useState([0, 1]);
   const reducedMotion = Boolean(useReducedMotion());
   const root = useRef<HTMLDivElement>(null);
@@ -184,18 +184,19 @@ export function ServiceImageDeck({ item, accent }: { item: PortfolioItem; accent
       aria-roledescription="carousel"
       aria-label={item.title}
       tabIndex={canNavigate ? 0 : undefined}
-      className="rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-[clamp(10rem,calc((100svh_-_16rem)*2/3),23rem)] sm:max-w-[40%] sm:flex-none"
+      className="rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-[clamp(10rem,calc((100svh_-_16rem)*var(--deck-aspect)),calc(34.5rem*var(--deck-aspect)))] sm:max-w-[40%] sm:flex-none"
+      style={{ "--deck-aspect": aspectRatio } as CSSProperties}
       onKeyDown={(event) => {
         if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
         event.preventDefault();
         moveImage(event.key === "ArrowRight" ? 1 : -1);
       }}
     >
-      <div className="relative isolate aspect-2/3">
+      <div className="relative isolate" style={{ aspectRatio }}>
         <AnimatePresence initial={false} custom={direction} onExitComplete={() => { busy.current = false; }}>
           {visibleImages.map(({ depth, index }) => (
             <DeckPhoto
-              key={item.images[index]}
+              key={index}
               src={item.images[index]}
               alt={`${item.title} — image ${index + 1} of ${imageCount}`}
               depth={depth}
