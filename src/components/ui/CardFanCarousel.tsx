@@ -76,8 +76,11 @@ export function CardFanCarousel({ images, accent, label }: CardFanCarouselProps)
   const half = Math.floor(visibleCount / 2);
   const cardHeight = Math.max(0, size.height - 70);
   const requestedGap = size.width * (small ? 0.23 : medium ? 0.17 : 0.112);
-  // Keep the cards overlapping even on wide, short laptop viewports.
-  const gap = Math.min(requestedGap, cardHeight * 0.45, Math.max(0, (size.width / 2 - cardHeight * 0.42 - 16) / Math.max(1, half)));
+  // Fit the rotated outer corners by tightening the fan, without shrinking the photos.
+  const widestRatio = Math.max(0, ...images.map((image) => image.width / image.height));
+  const outerAngle = half * 19 / 3 * Math.PI / 180;
+  const outerExtent = cardHeight * (1 - half * 0.075) * (widestRatio / 2 * Math.cos(outerAngle) + 0.72 * Math.sin(outerAngle));
+  const gap = Math.min(requestedGap, cardHeight * 0.45, Math.max(0, (size.width / 2 - outerExtent - 16) / Math.max(1, half)));
   const visible = nearby && size.width > 0 ? Array.from({ length: visibleCount }, (_, position) => {
     const slot = position - half;
     return { slot, index: (current + slot + count) % count };
