@@ -1,5 +1,5 @@
 .card-fan {
-  --fan-height: clamp(160px, calc(100svh - 24rem), 330px);
+  --fan-height: clamp(330px, 30vw, 420px);
   width: 100%;
   color: #f7f6f2;
   outline-offset: -4px;
@@ -102,11 +102,11 @@
 }
 
 @media (max-width: 759px) {
-  .card-fan { --fan-height: clamp(160px, calc(100svh - 24rem), 276px); }
+  .card-fan { --fan-height: 320px; }
 }
 
 @media (max-width: 479px) {
-  .card-fan { --fan-height: clamp(160px, calc(100svh - 24rem), 238px); }
+  .card-fan { --fan-height: clamp(260px, 74vw, 320px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
