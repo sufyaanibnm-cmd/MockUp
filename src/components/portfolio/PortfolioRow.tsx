@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { FeaturedProject } from "@/data/featuredWork";
 
 interface PortfolioRowProps {
@@ -7,106 +6,200 @@ interface PortfolioRowProps {
   direction: "left" | "right";
   number: string;
   automatic: boolean;
-  paused: boolean;
-  onPause: () => void;
-  onSelect: (project: FeaturedProject) => void;
 }
 
-function ProjectCard({ project, duplicate, onSelect }: {
+interface CardPosition {
+  element: HTMLElement;
+  center: number;
+  width: number;
+  visible: boolean;
+}
+
+// The middle copy leaves a full set of artwork on either side of the viewport.
+const wrapPosition = (position: number, width: number) =>
+  width / 2 + (((position - width / 2) % width) + width) % width;
+
+function ProjectCard({ project }: {
   project: FeaturedProject;
-  duplicate: boolean;
-  onSelect: (project: FeaturedProject) => void;
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const hasImage = Boolean(project.images[0]) && !imageFailed;
 
   return (
-    <button
-      type="button"
-      className={`fw-card fw-card--${project.width}${hasImage ? " fw-card--image" : ""}`}
-      tabIndex={duplicate ? -1 : 0}
-      aria-label={`Explore ${project.name} — ${project.category}`}
-      aria-haspopup="dialog"
-      onPointerDown={(event) => { if (duplicate) event.preventDefault(); }}
-      onClick={() => onSelect(project)}
+    <div
+      className="fw-card-shell"
+      style={{ "--fw-image-ratio": project.imageWidth / project.imageHeight } as CSSProperties}
     >
-      {hasImage ? (
-        <div className="fw-card__art">
-          <img src={project.images[0]} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)} />
+      <div className="fw-card">
+        <div className="fw-card__art" style={{ aspectRatio: `${project.imageWidth} / ${project.imageHeight}` }}>
+          {imageFailed ? <span className="fw-card__notice">Image unavailable</span> : (
+            <img
+              src={project.images[0]}
+              alt={project.name}
+              draggable={false}
+              width={project.imageWidth}
+              height={project.imageHeight}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImageFailed(true)}
+            />
+          )}
         </div>
-      ) : <span className="fw-card__notice">Project images coming soon</span>}
-      <div className="fw-card__caption">
-        <div>
-          <p>{project.category}</p>
-          <h3>{project.name}</h3>
+        <div className="fw-card__caption">
+          <div>
+            <p>{project.category}</p>
+            <h3>{project.name}</h3>
+          </div>
         </div>
-        <ArrowUpRight size={23} strokeWidth={1.6} aria-hidden="true" />
       </div>
-    </button>
+    </div>
   );
 }
 
-export function PortfolioRow({ projects, direction, number, automatic, paused, onPause, onSelect }: PortfolioRowProps) {
+export function PortfolioRow({ projects, direction, number, automatic }: PortfolioRowProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const groupRef = useRef<HTMLDivElement>(null);
+  const positionsRef = useRef({ viewportWidth: 0, groupWidth: 0, cards: [] as CardPosition[] });
+  const lastPaintedRef = useRef(Number.NaN);
+  const animatingRef = useRef(false);
+  const interactionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pointerDownRef = useRef(false);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [interacting, setInteracting] = useState(false);
   const [inView, setInView] = useState(false);
-  const stopped = paused || hovered || focused || !inView;
+  const [pageHidden, setPageHidden] = useState(() => document.hidden);
+  const stopped = hovered || focused || interacting || !inView || pageHidden;
+
+  const resumeAfterInteraction = useCallback(() => {
+    if (interactionTimerRef.current !== null) clearTimeout(interactionTimerRef.current);
+    interactionTimerRef.current = setTimeout(() => setInteracting(false), 900);
+  }, []);
+
+  useEffect(() => () => {
+    if (interactionTimerRef.current !== null) clearTimeout(interactionTimerRef.current);
+  }, []);
+
+  const paintPerspective = useCallback((scrollLeft: number) => {
+    if (lastPaintedRef.current === scrollLeft) return;
+    lastPaintedRef.current = scrollLeft;
+    const { viewportWidth: width, cards } = positionsRef.current;
+    if (!width) return;
+    const halfWidth = width / 2;
+    const maxAngle = width < 768 ? 22 : 34;
+
+    for (const card of cards) {
+      const distance = card.center - scrollLeft - halfWidth;
+      const visible = Math.abs(distance) < halfWidth + card.width;
+      if (!visible) {
+        if (card.visible) {
+          card.element.style.transform = "";
+          card.element.style.willChange = "";
+        }
+        card.visible = false;
+        continue;
+      }
+      const progress = Math.max(-1, Math.min(1, distance / halfWidth));
+      const angle = -progress * maxAngle;
+      const scale = 0.97 + progress * progress * 0.03;
+      card.element.style.transform = `perspective(700px) rotateY(${angle.toFixed(3)}deg) scale(${scale.toFixed(4)})`;
+      if (!card.visible) card.element.style.willChange = "transform";
+      card.visible = true;
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const group = groupRef.current;
+    if (!viewport || !group) return;
+    const previous = positionsRef.current;
+    for (const card of previous.cards) {
+      card.element.style.transform = "";
+      card.element.style.willChange = "";
+    }
+    const groupWidth = group.getBoundingClientRect().width;
+    const width = viewport.clientWidth;
+    const trackLeft = group.parentElement!.getBoundingClientRect().left;
+    // Cache untransformed positions on resize, never measure layout per frame.
+    const cards = Array.from(viewport.querySelectorAll<HTMLElement>(".fw-card-shell"), (element) => {
+      const rect = element.getBoundingClientRect();
+      return { element, center: rect.left - trackLeft + rect.width / 2, width: rect.width, visible: false };
+    });
+    positionsRef.current = { viewportWidth: width, groupWidth, cards };
+    if (automatic && groupWidth > 0) {
+      if (previous.groupWidth === 0) {
+        const first = group.firstElementChild as HTMLElement | null;
+        viewport.scrollLeft = groupWidth + (first?.getBoundingClientRect().width ?? 0) / 2 - width / 2;
+      } else if (previous.groupWidth !== groupWidth) {
+        viewport.scrollLeft = viewport.scrollLeft / previous.groupWidth * groupWidth;
+      }
+    }
+    lastPaintedRef.current = Number.NaN;
+    paintPerspective(viewport.scrollLeft);
+  }, [automatic, viewportWidth, projects, paintPerspective]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
+    let scrollFrame = 0;
     const resize = new ResizeObserver(() => setViewportWidth(viewport.clientWidth));
     const visibility = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    const onVisibility = () => setPageHidden(document.hidden);
+    const onScroll = () => {
+      if (animatingRef.current || scrollFrame) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        paintPerspective(viewport.scrollLeft);
+      });
+    };
     resize.observe(viewport);
     visibility.observe(viewport);
-    return () => { resize.disconnect(); visibility.disconnect(); };
-  }, []);
+    document.addEventListener("visibilitychange", onVisibility);
+    viewport.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      resize.disconnect();
+      visibility.disconnect();
+      cancelAnimationFrame(scrollFrame);
+      document.removeEventListener("visibilitychange", onVisibility);
+      viewport.removeEventListener("scroll", onScroll);
+    };
+  }, [paintPerspective]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
-    const group = groupRef.current;
-    if (!viewport || !group) return;
-    viewport.scrollLeft = automatic ? group.getBoundingClientRect().width : 0;
-  }, [automatic, viewportWidth]);
-
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    const group = groupRef.current;
-    if (!automatic || stopped || !viewport || !group) return;
-    const width = group.getBoundingClientRect().width;
-    if (width <= 0) return;
+    const width = positionsRef.current.groupWidth;
+    if (!automatic || stopped || !viewport || width <= 0) return;
 
     let frame = 0;
     let previousTime = 0;
     let position = viewport.scrollLeft;
     let lastApplied = viewport.scrollLeft;
+    animatingRef.current = true;
     const tick = (time: number) => {
       // Cap inactive-tab time and retain fractional pixels for steady motion.
       const elapsed = previousTime ? Math.min(time - previousTime, 48) : 0;
       previousTime = time;
       if (Math.abs(viewport.scrollLeft - lastApplied) > 2) position = viewport.scrollLeft;
-      position += elapsed * 0.026 * (direction === "left" ? 1 : -1);
-      if (position < width) position += width;
-      if (position >= width * 2) position -= width;
+      position = wrapPosition(position + elapsed * 0.026 * (direction === "left" ? 1 : -1), width);
       viewport.scrollLeft = position;
       lastApplied = viewport.scrollLeft;
+      paintPerspective(lastApplied);
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [automatic, stopped, direction, viewportWidth]);
+    return () => {
+      animatingRef.current = false;
+      cancelAnimationFrame(frame);
+    };
+  }, [automatic, stopped, direction, viewportWidth, projects, paintPerspective]);
 
   const scroll = (sign: number) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
-    onPause();
-    if (automatic && groupRef.current) {
-      const width = groupRef.current.getBoundingClientRect().width;
-      if (width > 0) viewport.scrollLeft = width + ((viewport.scrollLeft % width) + width) % width;
-    }
+    setInteracting(true);
+    resumeAfterInteraction();
+    const width = positionsRef.current.groupWidth;
+    if (automatic && width > 0) viewport.scrollLeft = wrapPosition(viewport.scrollLeft, width);
     viewport.scrollBy({
       left: sign * Math.min(viewport.clientWidth * 0.75, 440),
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
@@ -119,29 +212,49 @@ export function PortfolioRow({ projects, direction, number, automatic, paused, o
       className="fw-row"
       onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}
       onPointerLeave={() => setHovered(false)}
-      onFocusCapture={() => setFocused(true)}
+      onPointerDown={(event) => {
+        if (event.pointerType === "touch" || event.pointerType === "pen") {
+          pointerDownRef.current = true;
+          if (interactionTimerRef.current !== null) clearTimeout(interactionTimerRef.current);
+          setInteracting(true);
+        }
+      }}
+      onPointerUp={() => {
+        if (pointerDownRef.current) {
+          pointerDownRef.current = false;
+          resumeAfterInteraction();
+        }
+      }}
+      onPointerCancel={() => {
+        pointerDownRef.current = false;
+        resumeAfterInteraction();
+      }}
+      onFocusCapture={(event) => setFocused(event.target.matches(":focus-visible"))}
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     >
-      <div className="fw-row__bar">
-        <div className="fw-row__direction">
-          <span className="fw-row__direction-icon" aria-hidden="true">
-            {direction === "right" ? <ArrowRight size={17} /> : <ArrowLeft size={17} />}
-          </span>
-          <span>{automatic ? `Scroll ${direction}` : "Explore the work"}</span>
-        </div>
-        <span className="fw-row__rule" />
-        <span className="fw-row__number">{number} / 02</span>
-        <div className="fw-row__controls">
-          <button type="button" onClick={() => scroll(-1)} aria-label={`Scroll project row ${number} left`} aria-controls={`project-row-${number}`}><ArrowLeft size={16} aria-hidden="true" /></button>
-          <button type="button" onClick={() => scroll(1)} aria-label={`Scroll project row ${number} right`} aria-controls={`project-row-${number}`}><ArrowRight size={16} aria-hidden="true" /></button>
-        </div>
-      </div>
       <div
         id={`project-row-${number}`}
         ref={viewportRef}
         className={`fw-viewport${automatic ? " fw-viewport--loop" : ""}`}
         role="region"
+        tabIndex={0}
         aria-label={`Project row ${number}, ${automatic ? `moves ${direction}` : "swipe to explore"}`}
+        onWheel={(event) => {
+          if (Math.abs(event.deltaX) > 0 || event.shiftKey) {
+            setInteracting(true);
+            resumeAfterInteraction();
+          }
+        }}
+        onScroll={() => {
+          if (interacting && !pointerDownRef.current) resumeAfterInteraction();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+            setFocused(true);
+            scroll(event.key === "ArrowLeft" ? -1 : 1);
+          }
+        }}
       >
         <div className="fw-track">
           {copies.map((copy) => (
@@ -150,9 +263,8 @@ export function PortfolioRow({ projects, direction, number, automatic, paused, o
               key={copy}
               ref={copy === 1 ? groupRef : undefined}
               aria-hidden={copy !== 1 ? true : undefined}
-              style={automatic ? { minWidth: viewportWidth } : undefined}
             >
-              {projects.map((project) => <ProjectCard key={project.id} project={project} duplicate={copy !== 1} onSelect={onSelect} />)}
+              {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
             </div>
           ))}
         </div>

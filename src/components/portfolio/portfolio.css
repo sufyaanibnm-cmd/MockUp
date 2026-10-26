@@ -1,24 +1,20 @@
 .featured-work {
+  --fw-image-height: clamp(160px, 15vw, 210px);
   padding: 104px 0 88px;
   overflow: hidden;
   background: #fafaf9;
   color: #111212;
 }
 
-.fw-heading,
-.fw-row__bar,
-.fw-footnote {
+.fw-heading {
   width: calc(100% - 96px);
   max-width: 1280px;
   margin-inline: auto;
-}
-
-.fw-heading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 36px;
-  margin-bottom: 48px;
+  margin-bottom: 12px;
 }
 
 .fw-eyebrow {
@@ -52,7 +48,6 @@
   flex-direction: column;
   align-items: flex-start;
   flex-shrink: 0;
-  gap: 18px;
   padding-bottom: 3px;
 }
 
@@ -65,95 +60,15 @@
   text-transform: uppercase;
 }
 
-.fw-motion-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 11px;
-  border: 1px solid #dcdedb;
-  border-radius: 30px;
-  background: transparent;
-  color: #555b57;
-  font-size: 10px;
-  line-height: 1.3;
-  cursor: pointer;
-  transition: background 180ms ease, border-color 180ms ease;
-}
-
-.fw-motion-toggle:hover {
-  border-color: #b3b7b1;
-  background: #eeefeb;
-}
-
-.fw-swipe-hint {
-  display: block;
-  color: #777b78;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
 .fw-rows {
   display: flex;
   flex-direction: column;
-  gap: 38px;
 }
 
 .fw-row {
   min-width: 0;
 }
 
-.fw-row__bar {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  min-height: 36px;
-  margin-bottom: 14px;
-}
-
-.fw-row__direction {
-  display: inline-flex;
-  align-items: center;
-  gap: 19px;
-  flex-shrink: 0;
-  color: #737975;
-  font-size: 9px;
-  line-height: 1.4;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-}
-
-.fw-row__direction-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #eeefec;
-  color: #282e29;
-}
-
-.fw-row__rule {
-  flex: 1;
-  height: 1px;
-  background: #dadcd8;
-}
-
-.fw-row__number {
-  flex-shrink: 0;
-  color: #848a85;
-  font-size: 9px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.14em;
-}
-
-.fw-row__controls {
-  display: flex;
-  flex-shrink: 0;
-  gap: 9px;
-}
-
-.fw-row__controls button,
 .fw-gallery__navigation button {
   display: inline-flex;
   align-items: center;
@@ -168,21 +83,18 @@
   transition: background 180ms ease, color 180ms ease;
 }
 
-.fw-row__controls button:hover,
 .fw-gallery__navigation button:hover {
   background: #191e1a;
   color: #fff;
 }
 
-.fw-row__controls button:disabled,
 .fw-gallery__navigation button:disabled {
   opacity: 0.35;
   cursor: default;
 }
 
 .fw-viewport {
-  padding-block: 14px;
-  margin-block: -14px;
+  padding-block: 48px;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -200,107 +112,75 @@
 }
 
 .fw-track {
+  position: relative;
   display: flex;
   width: max-content;
 }
 
 .fw-group {
+  position: relative;
   display: flex;
   flex-shrink: 0;
-  gap: 14px;
-  padding-right: 14px;
+  align-items: flex-start;
+  gap: 16px;
+  padding-right: 16px;
+}
+
+.fw-card-shell {
+  position: relative;
+  flex: 0 0 auto;
+  width: calc(var(--fw-image-height) * var(--fw-image-ratio));
+  transform-origin: center;
+  scroll-snap-align: center;
 }
 
 .fw-card {
   position: relative;
   display: block;
-  flex: 1 0 auto;
-  width: clamp(280px, 29vw, 410px);
-  height: clamp(245px, 24vw, 340px);
+  width: 100%;
   padding: 0;
   overflow: hidden;
-  border: 1px solid #272d2c;
-  border-radius: 7px;
-  background: #101516;
-  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #171c18;
+  box-shadow: 0 2px 8px rgb(20 28 22 / 8%);
   text-align: left;
-  cursor: pointer;
-  scroll-snap-align: start;
-  isolation: isolate;
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-}
-
-.fw-card:focus-visible {
-  z-index: 3;
-  transform: translateY(-4px) scale(1.025);
-  border-color: #78867d;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 16%);
+  cursor: default;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 @media (hover: hover) {
   .fw-card:hover {
-    z-index: 3;
-    transform: translateY(-4px) scale(1.025);
-    border-color: #78867d;
-    box-shadow: 0 6px 12px rgb(0 0 0 / 16%);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgb(20 28 22 / 13%);
   }
 }
 
-.fw-card--wide {
-  width: clamp(340px, 37vw, 520px);
-}
-
-.fw-card--narrow {
-  width: clamp(260px, 23vw, 320px);
-}
-
 .fw-card__art {
-  position: absolute;
-  inset: 0;
+  display: block;
+  width: 100%;
 }
 
 .fw-card__art img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fw-card--image::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background: linear-gradient(180deg, rgb(0 0 0 / 7%) 0%, transparent 40%, rgb(0 0 0 / 24%) 68%, rgb(0 0 0 / 85%) 100%);
-  content: "";
-  pointer-events: none;
-}
-
-.fw-card__notice {
-  position: absolute;
-  z-index: 2;
-  top: 16px;
-  left: 18px;
-  right: 18px;
-  color: rgb(255 255 255 / 72%);
-  font-size: 11px;
-  line-height: 1.5;
+  height: auto;
+  object-fit: contain;
 }
 
 .fw-card__caption {
-  position: absolute;
-  z-index: 2;
-  right: 19px;
-  bottom: 20px;
-  left: 19px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
+  padding: 11px 14px 12px;
+  background: #fff;
 }
 
 .fw-card__caption p {
-  margin-bottom: 7px;
-  color: rgb(255 255 255 / 75%);
+  margin: 0 0 4px;
+  color: #707870;
   font-size: 8px;
   font-weight: 400;
   line-height: 1.5;
@@ -310,40 +190,17 @@
 
 .fw-card__caption h3 {
   margin: 0;
-  font-size: clamp(19px, 1.7vw, 24px);
+  font-size: 12px;
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.055em;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
-.fw-card__caption > svg {
-  flex-shrink: 0;
-  margin-bottom: 1px;
-  transition: transform 200ms ease;
-}
-
-.fw-card:hover .fw-card__caption > svg {
-  transform: translate(2px, -2px);
-}
-
-.fw-footnote {
-  margin-top: 27px;
-  color: #7b807b;
-  font-size: 10px;
-  line-height: 1.7;
-}
-
-.featured-work button:focus-visible,
 .fw-viewport:focus-visible,
 .fw-gallery button:focus-visible,
 .fw-gallery a:focus-visible {
   outline: 2px solid #6e846c;
   outline-offset: 4px;
-}
-
-.featured-work .fw-card:focus-visible {
-  outline: 3px solid #e9efb8;
-  outline-offset: -5px;
 }
 
 .fw-gallery {
@@ -497,20 +354,15 @@
 
 @media (max-width: 767px) {
   .featured-work {
+    --fw-image-height: clamp(130px, 45vw, 185px);
     padding: 72px 0 64px;
   }
 
-  .fw-heading,
-  .fw-row__bar,
-  .fw-footnote {
-    width: calc(100% - 48px);
-  }
-
   .fw-heading {
+    width: calc(100% - 48px);
     align-items: flex-start;
     flex-direction: column;
-    gap: 22px;
-    margin-bottom: 28px;
+    margin-bottom: 8px;
   }
 
   .fw-eyebrow {
@@ -524,80 +376,15 @@
   }
 
   .fw-heading__aside {
-    padding: 0;
-  }
-
-  .fw-heading__aside > p {
     display: none;
-  }
-
-  .fw-swipe-hint {
-    display: block;
-  }
-
-  .fw-rows {
-    gap: 28px;
-  }
-
-  .fw-row__bar {
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-
-  .fw-row__direction {
-    gap: 0;
-    font-size: 8px;
-    letter-spacing: 0.18em;
-  }
-
-  .fw-row__direction-icon,
-  .fw-row__number {
-    display: none;
-  }
-
-  .fw-row__controls {
-    gap: 7px;
-  }
-
-  .fw-row__controls button {
-    width: 36px;
-    height: 36px;
   }
 
   .fw-viewport {
-    padding-inline: 24px;
-    scroll-padding-inline: 24px;
-  }
-
-  .fw-group {
-    gap: 12px;
-    padding-right: 0;
-  }
-
-  .fw-viewport--loop .fw-group {
-    padding-right: 12px;
-  }
-
-  .fw-card,
-  .fw-card--wide,
-  .fw-card--narrow {
-    width: min(78vw, 360px);
-    height: 295px;
+    padding-block: 38px;
   }
 
   .fw-card__caption {
-    right: 18px;
-    bottom: 19px;
-    left: 18px;
-  }
-
-  .fw-card__caption h3 {
-    font-size: 22px;
-  }
-
-  .fw-footnote {
-    margin-top: 23px;
-    font-size: 10px;
+    padding: 10px 12px 11px;
   }
 
   .fw-gallery {
@@ -639,5 +426,9 @@
     scroll-behavior: auto;
     transition: none;
     animation: none;
+  }
+
+  .fw-card:hover {
+    transform: none;
   }
 }
