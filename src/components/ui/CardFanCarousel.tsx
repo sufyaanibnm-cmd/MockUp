@@ -15,9 +15,11 @@ interface CardFanCarouselProps {
   images: readonly FanArtwork[];
   accent: string;
   label: string;
+  /** Keep wider artwork fully visible when its natural width exceeds a narrow screen. */
+  fitToWidth?: boolean;
 }
 
-export function CardFanCarousel({ images, accent, label }: CardFanCarouselProps) {
+export function CardFanCarousel({ images, accent, label, fitToWidth = false }: CardFanCarouselProps) {
   const [selected, setSelected] = useState(0);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const stage = useRef<HTMLDivElement>(null);
@@ -31,7 +33,9 @@ export function CardFanCarousel({ images, accent, label }: CardFanCarouselProps)
     const element = stage.current;
     if (!element) return;
     const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
+      const { width } = entry.contentRect;
+      // Read the preferred height, rather than feeding a width-constrained height back into sizing.
+      const height = parseFloat(getComputedStyle(element).getPropertyValue("--fan-height")) + 70;
       setSize((previous) => previous.width === width && previous.height === height ? previous : { width, height });
     });
     observer.observe(element);
@@ -74,12 +78,16 @@ export function CardFanCarousel({ images, accent, label }: CardFanCarouselProps)
   const medium = size.width < 760;
   const visibleCount = Math.min(count, small ? 3 : medium ? 5 : 7);
   const half = Math.floor(visibleCount / 2);
-  const cardHeight = Math.max(0, size.height - 70);
-  const requestedGap = size.width * (small ? 0.23 : medium ? 0.17 : 0.112);
-  // Fit the rotated outer corners by tightening the fan, without shrinking the photos.
   const widestRatio = Math.max(0, ...images.map((image) => image.width / image.height));
   const outerAngle = half * 19 / 3 * Math.PI / 180;
-  const outerExtent = cardHeight * (1 - half * 0.075) * (widestRatio / 2 * Math.cos(outerAngle) + 0.72 * Math.sin(outerAngle));
+  const outerExtentFactor = (1 - half * 0.075) * (widestRatio / 2 * Math.cos(outerAngle) + 0.72 * Math.sin(outerAngle));
+  const preferredHeight = Math.max(0, size.height - 70);
+  const cardHeight = fitToWidth && widestRatio > 0
+    ? Math.min(preferredHeight, Math.max(0, size.width - 32) / widestRatio, size.width / (2 * outerExtentFactor))
+    : preferredHeight;
+  const requestedGap = size.width * (small ? 0.23 : medium ? 0.17 : 0.112);
+  // Fit the rotated outer corners by tightening the fan, without shrinking the photos.
+  const outerExtent = cardHeight * outerExtentFactor;
   const gap = Math.min(requestedGap, cardHeight * 0.45, Math.max(0, (size.width / 2 - outerExtent - 16) / Math.max(1, half)));
   const visible = nearby && size.width > 0 ? Array.from({ length: visibleCount }, (_, position) => {
     const slot = position - half;
@@ -104,6 +112,7 @@ export function CardFanCarousel({ images, accent, label }: CardFanCarouselProps)
       <div
         ref={stage}
         className="card-fan-stage"
+        style={fitToWidth && size.width > 0 ? { height: cardHeight + 70 } : undefined}
         onPointerDown={startSwipe}
         onPointerMove={trackSwipe}
         onPointerUp={finishSwipe}

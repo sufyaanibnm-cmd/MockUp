@@ -7,11 +7,11 @@ import {
   StatStrip,
   FormulaSection,
   EcosystemGrid,
-  ServiceGalleryGrid,
   ServiceClosingCTA,
 } from "@/components/services";
 import { getServiceContent } from "@/data/serviceContent";
-import { getPortfolioForService } from "@/data/portfolio";
+import { CardFanCarousel } from "@/components/ui/CardFanCarousel";
+import { contentArtwork } from "@/data/contentArtwork";
 
 const SLUG = "content-creation-animation";
 
@@ -19,7 +19,6 @@ const motionStages = ["Concept", "Storyboard", "Production", "Animation", "Final
 
 export default function ContentCreationAnimation() {
   const content = getServiceContent(SLUG);
-  const work = getPortfolioForService(SLUG, 4);
 
   return (
     <>
@@ -66,16 +65,27 @@ export default function ContentCreationAnimation() {
       </section>
 
       {/* SELECTED WORK */}
-      <section id="work" className="border-t border-white/10 bg-black px-6 py-24 text-white md:py-32">
-        <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em]" style={{ color: content.accent }}>
-            Selected Work
+      <section id="work" className="scroll-mt-20 overflow-x-clip border-t border-white/10 bg-black py-4 text-white" aria-labelledby="content-work-title">
+        <div className="mx-auto flex max-w-6xl items-end justify-between gap-6 px-6">
+          <div>
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.33em]" style={{ color: content.accent }}>
+              Selected Work / Content Creation &amp; Animation
+            </p>
+            <h2 id="content-work-title" className="max-w-2xl font-display text-[clamp(1.75rem,4vw,2.625rem)] font-bold leading-[1.08] tracking-tight">
+              A cinematic look at recent{" "}
+              <span className="italic font-light text-white/50">campaigns</span>
+            </h2>
+          </div>
+          <p className="mb-1 hidden shrink-0 text-[10px] uppercase tracking-[0.16em] text-white/55 md:block">
+            One collection. {contentArtwork.length} artworks.
           </p>
-          <h2 className="mb-14 max-w-2xl font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-black leading-tight tracking-tight">
-            A cinematic look at recent{" "}
-            <span className="italic font-light text-white/50">campaigns</span>
-          </h2>
-          <ServiceGalleryGrid items={work} accent={content.accent} />
+        </div>
+        <CardFanCarousel images={contentArtwork} accent={content.accent} label="Content Creation & Animation artwork" fitToWidth />
+        <div className="mx-auto mt-5 max-w-6xl px-6">
+          <div className="flex justify-between gap-6 border-t border-white/10 pt-4 text-[9px] uppercase tracking-[0.17em] text-white/50">
+            <span>Creative campaigns &amp; social media</span>
+            <span className="hidden sm:inline">Shaffedits — Selected work</span>
+          </div>
         </div>
       </section>
 

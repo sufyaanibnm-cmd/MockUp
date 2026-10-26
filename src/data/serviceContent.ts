@@ -133,7 +133,7 @@ export const serviceContent: Record<string, ServiceContent> = {
     heroSupport:
       "From kinetic typography to full campaign edits — content engineered to stop the scroll and hold attention on brand, every time.",
     heroCta: "Start a Content Project",
-    heroWatch: "Watch the Reel",
+    heroWatch: "View Content Work",
     capabilities: [
       { icon: Megaphone, title: "Social Content", desc: "Static, carousel, and short-form built for how each platform is used." },
       { icon: Wand2, title: "Motion Graphics", desc: "Kinetic type and graphic animation that carries a message with rhythm." },
