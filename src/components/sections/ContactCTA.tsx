@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import emailjs from "@emailjs/browser";
+import { sendContactEnquiry } from "@/lib/contactEmail";
 import { Instagram, Linkedin, Youtube, CheckCircle2, AlertCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { GlowButton } from "../ui/GlowButton";
@@ -21,45 +21,30 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
-
 export function ContactCTA() {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const {
-  register,
-  handleSubmit,
-  reset,
-  setValue,
-  watch,
-  formState: { errors },
-} = useForm<FormData>({
-  resolver: zodResolver(schema),
-  defaultValues: {
-    phone: "",
-  },
-});
-const phone = watch("phone");
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
+  const phone = watch("phone");
 
   const onSubmit = async (data: FormData) => {
     setState("sending");
     try {
-      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-        throw new Error("EmailJS environment variables are missing");
-      }
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: data.name,
-          from_email: data.email,
-          phone: data.phone,
-          message: data.message,
-          to_email: "hi@shaffedits.com",
-        },
-        { publicKey: PUBLIC_KEY },
-      );
+      await sendContactEnquiry(data);
       setState("success");
       reset();
     } catch (err) {
@@ -164,13 +149,13 @@ const phone = watch("phone");
               {state === "sending" ? "Sending…" : "Book a call"}
             </GlowButton>
             {state === "success" && (
-              <p className="flex items-center gap-2 text-sm text-white">
+              <p role="status" className="flex items-center gap-2 text-sm text-white">
                 <CheckCircle2 className="h-4 w-4" />
                 Thanks — we'll be in touch within one business day.
               </p>
             )}
             {state === "error" && (
-              <p className="flex items-center gap-2 text-sm text-white/80">
+              <p role="alert" className="flex items-center gap-2 text-sm text-white/80">
                 <AlertCircle className="h-4 w-4" />
                 Something went wrong. Please email{" "}
                 <a href="mailto:hi@shaffedits.com" className="underline">
